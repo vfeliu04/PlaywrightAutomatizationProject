@@ -2,10 +2,8 @@ name: Book Padel Courts
 
 on:
   schedule:
-    # Runs at 00:01 CEST every Monday.
-    # CEST is UTC+2, so 00:01 CEST is 22:01 UTC on Sunday.
-    # During daylight saving, it's 23:01 UTC. We'll use 23:01 to be safe.
-    - cron: '1 23 * * 0' # 23:01 UTC on Sunday
+    # Runs every day at 00:00 CEST (22:00 UTC).
+    - cron: '0 22 * * *'
   workflow_dispatch: # Allows manual triggering
 
 jobs:
