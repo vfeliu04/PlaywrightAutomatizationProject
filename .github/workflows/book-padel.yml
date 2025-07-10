@@ -27,7 +27,6 @@ jobs:
       - name: Run booking script
         run: node scripts/book.js
         env:
-          # Add any necessary environment variables here
-          # For example, login credentials
-          # USERNAME: ${{ secrets.USERNAME }}
-          # PASSWORD: ${{ secrets.PASSWORD }}
+          PLAYER_NUMBER: ${{ secrets.PLAYER_NUMBER }}
+          PASSWORD: ${{ secrets.PASSWORD }}
+          SECOND_PLAYER: ${{ secrets.SECOND_PLAYER }}

@@ -22,6 +22,44 @@ That's it! The system will automatically run at 00:01 on Monday morning and atte
 
 ---
 
+## System Guide
+
+### How the Automation Works on GitHub
+
+**1. Scheduled Trigger:**
+Yes, the script will run automatically at the exact time we specified. We've configured a `cron` schedule in the `.github/workflows/book-padel.yml` file. This is a universal standard for scheduling tasks. GitHub's servers are constantly checking these schedules, and when the clock hits **00:00 CEST**, it will automatically kick off your workflow.
+
+**2. The "Actions" Tab: Your Control Center**
+You can see everything that happens in the **Actions** tab of your GitHub repository.
+
+*   **How to find it:** Go to your repository page on GitHub. Along the top, next to "Code" and "Issues", you will see a tab called **"Actions"**.
+
+*   **What you'll see:** This tab is your console. It will show a list of every single time the "Book Padel Courts" workflow has run. Each run will have a status next to it:
+    *   A **green checkmark (✓)** means the script ran successfully.
+    *   A **red X (✗)** means the script failed for some reason.
+    *   A **yellow circle** means it's currently in progress.
+
+**3. Viewing the Console Output:**
+To see exactly what happened during a run, you can click on it in the Actions list. This will take you to a detailed view where you can see the logs for each step. You can click on the "Run booking script" step to see all the `console.log` messages from our `scripts/book.js` file, like "Found 13 available slots," "Checking slot at 9:00...", and most importantly, "Successfully booked slot for 12:00!".
+
+This is how you will know for sure if a booking was successful without having to check the website yourself.
+
+### How to Change the Schedule from Any Computer
+
+This is the best part – you don't need any code editor or local setup to change the booking schedule. You can do it directly from the GitHub website on any computer.
+
+**Here’s how:**
+
+1.  **Navigate to your repository** on GitHub.
+2.  You will see a list of your files. Find and click on the **`slots.json`** file.
+3.  On the page that shows the file's content, look for a **pencil icon (✎)** in the top-right corner. Click it to edit the file.
+4.  Change the `"day"` and `"times"` to whatever you want for the next booking.
+5.  Scroll to the bottom of the page and click the green **"Commit changes"** button.
+
+That's it! The next time the workflow runs, it will automatically use your newly saved schedule. This makes it incredibly easy to manage your bookings from anywhere.
+
+---
+
 ## For the Developer (Technical Details)
 
 ### How It Works
@@ -35,7 +73,7 @@ The system uses a Node.js script with the Playwright library to automate browser
 *   **`slots.json`**: A simple JSON file that acts as the configuration for the booking script. It defines the target `day` of the week and an array of `times` to book.
 
 *   **`.github/workflows/book-padel.yml`**: This GitHub Actions workflow automates the execution of the booking script.
-    *   **Trigger:** It is scheduled to run every Monday at 00:01 CEST (`cron: '1 23 * * 0'`). It can also be triggered manually from the repository's "Actions" tab.
+    *   **Trigger:** It is scheduled to run every day at 00:00 CEST (`cron: '0 22 * * *'`). It can also be triggered manually from the repository's "Actions" tab.
     *   **Environment:** It sets up an Ubuntu environment with Node.js 18 and installs all necessary dependencies, including Playwright's browser binaries.
     *   **Execution:** It runs the `node scripts/book.js` command to start the booking process.
 

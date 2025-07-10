@@ -60,11 +60,11 @@ const slots = require('../slots.json');
         console.log(`Found a desired slot at ${time}! Proceeding with booking.`);
         
         // --- Login and Booking Flow (from Codegen) ---
-        await newPage.getByLabel('Numéro de joueur').fill('993');
-        await newPage.locator('#pwd').fill('7856');
+        await newPage.getByLabel('Numéro de joueur').fill(process.env.PLAYER_NUMBER);
+        await newPage.locator('#pwd').fill(process.env.PASSWORD);
         await newPage.getByRole('button', { name: 'OK' }).click();
         
-        await newPage.getByPlaceholder('Entrez quelques lettres...').fill('Feliu Pedro 17714');
+        await newPage.getByPlaceholder('Entrez quelques lettres...').fill(process.env.SECOND_PLAYER);
         await newPage.getByRole('button', { name: 'OK' }).click();
         
         await newPage.getByRole('button', { name: 'Continuer' }).click();
