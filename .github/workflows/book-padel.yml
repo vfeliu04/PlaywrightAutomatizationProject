@@ -1,0 +1,35 @@
+name: Book Padel Courts
+
+on:
+  schedule:
+    # Runs at 00:01 CEST every Monday.
+    # CEST is UTC+2, so 00:01 CEST is 22:01 UTC on Sunday.
+    # During daylight saving, it's 23:01 UTC. We'll use 23:01 to be safe.
+    - cron: '1 23 * * 0' # 23:01 UTC on Sunday
+  workflow_dispatch: # Allows manual triggering
+
+jobs:
+  book:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
+
+      - name: Run booking script
+        run: node scripts/book.js
+        env:
+          # Add any necessary environment variables here
+          # For example, login credentials
+          # USERNAME: ${{ secrets.USERNAME }}
+          # PASSWORD: ${{ secrets.PASSWORD }}
