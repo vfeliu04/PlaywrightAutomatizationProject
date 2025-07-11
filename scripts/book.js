@@ -2,7 +2,8 @@ const { chromium } = require('playwright');
 const slots = require('../slots.json');
 
 (async () => {
-  const browser = await chromium.launch({ headless: false });
+  // Launch in headless mode for compatibility with GitHub Actions
+  const browser = await chromium.launch({ headless: true });
   const context = await browser.newContext();
   const page = await context.newPage();
   let newPage; // Declare here to be accessible in catch block
