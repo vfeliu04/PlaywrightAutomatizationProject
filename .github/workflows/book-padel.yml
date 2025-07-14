@@ -30,3 +30,6 @@ jobs:
           PLAYER_NUMBER: ${{ secrets.PLAYER_NUMBER }}
           PASSWORD: ${{ secrets.PASSWORD }}
           SECOND_PLAYER: ${{ secrets.SECOND_PLAYER }}
+          CARD_HOLDER: ${{ secrets.CARD_HOLDER }}
+          CARD_NUMBER: ${{ secrets.CARD_NUMBER }}
+          CARD_EXPIRY: ${{ secrets.CARD_EXPIRY }}

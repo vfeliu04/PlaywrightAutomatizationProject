@@ -8,17 +8,17 @@ This project is an automated system that books padel courts at the Centre Fair-P
 
 ### What It Does
 
-This system automatically books padel courts for you. You just need to tell it which day and times you want, and it will handle the rest.
+This system automatically books one or more padel courts for you. You just need to tell it which day and times you want, and it will handle the rest.
 
 ### How to Use It
 
 1.  **Open the `slots.json` file.**
 2.  **Edit the `day` and `times`** to match your desired schedule for the upcoming week.
     *   The `day` should be the full English name (e.g., "Thursday").
-    *   The `times` should be a list of the start times you want to book (e.g., `["10:30", "12:00"]`).
+    *   The `times` should be a list of all the start times you want to book (e.g., `["12:00", "13:30"]`).
 3.  **Save the file.**
 
-That's it! The system will automatically run at 00:01 on Monday morning and attempt to book the slots you've specified.
+That's it! The system will automatically run every day at 00:00 CEST and attempt to book all the slots you've specified.
 
 ---
 
@@ -64,11 +64,11 @@ That's it! The next time the workflow runs, it will automatically use your newly
 
 ### How It Works
 
-The system uses a Node.js script with the Playwright library to automate browser interactions. The process is managed and scheduled by a GitHub Actions workflow.
+The system uses a Node.js script with the Playwright library to automate browser interactions. The process is managed and scheduled by a GitHub Actions workflow. It is capable of booking multiple time slots in a single run and handles sensitive data securely.
 
 ### Core Components
 
-*   **`scripts/book.js`**: This is the main Playwright script that performs the booking. It launches a browser, navigates to the booking website, logs in, and iterates through available slots to find and reserve the ones specified in `slots.json`. It includes error handling and a safety mechanism to cancel pending reservations if an error occurs.
+*   **`scripts/book.js`**: This is the main Playwright script that performs the booking. It launches a browser, navigates to the booking website, logs in, and iterates through available slots to find and reserve all the ones specified in `slots.json`. It includes error handling, a safety mechanism to cancel pending reservations, and logic to handle locked slots.
 
 *   **`slots.json`**: A simple JSON file that acts as the configuration for the booking script. It defines the target `day` of the week and an array of `times` to book.
 
@@ -76,9 +76,12 @@ The system uses a Node.js script with the Playwright library to automate browser
     *   **Trigger:** It is scheduled to run every day at 00:00 CEST (`cron: '0 22 * * *'`). It can also be triggered manually from the repository's "Actions" tab.
     *   **Environment:** It sets up an Ubuntu environment with Node.js 18 and installs all necessary dependencies, including Playwright's browser binaries.
     *   **Execution:** It runs the `node scripts/book.js` command to start the booking process.
+    *   **Secrets:** It securely injects credentials (player number, password, credit card details) into the script using GitHub Secrets.
 
 ### Setup and Dependencies
 
 *   **Node.js**: The runtime environment.
 *   **Playwright**: The browser automation and testing library.
+*   **`dotenv`**: A package to manage local environment variables for testing.
 *   **Dependencies**: To install the necessary packages, run `npm install`.
+*   **Local Environment:** For local testing, create a `.env` file (by copying `.env.example`) and fill in the required credentials. This file is ignored by Git to keep your secrets safe.
