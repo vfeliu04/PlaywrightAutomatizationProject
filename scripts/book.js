@@ -4,7 +4,7 @@ const slots = require('../slots.json');
 
 (async () => {
   // Launch in headless mode for compatibility with GitHub Actions
-  const browser = await chromium.launch({ headless: false });
+  const browser = await chromium.launch({ headless: true });
   const context = await browser.newContext();
   const page = await context.newPage();
   let newPage; // Declare here to be accessible in catch block
