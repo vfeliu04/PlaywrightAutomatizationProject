@@ -60,12 +60,15 @@ const slots = require('../slots.json');
         }
 
         // Check if the time matches
-        const timeSelector = 'span.button-text:has-text("juillet")';
+        const timeSelector = 'td.entete_date span.button-text';
         await newPage.waitForSelector(timeSelector);
         const timeText = await newPage.locator(timeSelector).textContent();
         const time = timeText.split(' à ')[1];
+
+        const desiredHour = timeToBook.split(':')[0];
+        const siteHour = time.split(':')[0];
         
-        if (time === timeToBook) {
+        if (siteHour === desiredHour) {
           console.log(`Found matching slot at ${time}. Proceeding with booking.`);
           
           await newPage.getByLabel('Numéro de joueur').fill(process.env.PLAYER_NUMBER);
@@ -79,13 +82,8 @@ const slots = require('../slots.json');
           await newPage.getByRole('button', { name: 'Continuer' }).click();
           await newPage.waitForURL('**/paiement.php**');
           await newPage.locator('#cbx').check();
+          await newPage.getByLabel('Débiter mon solde').check();
           await newPage.getByRole('button', { name: 'Valider le mode de paiement' }).click();
-
-          // Fill in payment details
-          await newPage.getByLabel('Account holder').fill(process.env.CARD_HOLDER);
-          await newPage.getByLabel('Card number').fill(process.env.CARD_NUMBER);
-          await newPage.getByLabel('Expiry date').fill(process.env.CARD_EXPIRY);
-          await newPage.getByRole('button', { name: 'Payer' }).click();
           
           console.log(`Successfully filled payment details for ${time}!`);
           bookedCount++;
