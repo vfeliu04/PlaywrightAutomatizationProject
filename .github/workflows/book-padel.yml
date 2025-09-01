@@ -2,8 +2,8 @@ name: Book Padel Courts
 
 on:
   schedule:
-    # Runs every day at 10:33 CEST (8:33 UTC).
-    - cron: '35 8 * * *'
+    # Runs every day at 10:40 CEST (8:40 UTC).
+    - cron: '40 8 * * *'
   workflow_dispatch: # Allows manual triggering
 
 jobs:
