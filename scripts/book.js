@@ -82,8 +82,8 @@ const slots = require('../slots.json');
           await newPage.getByRole('button', { name: 'Continuer' }).click();
           await newPage.waitForURL('**/paiement.php**');
           await newPage.locator('#cbx').check();
-          await newPage.getByLabel('Débiter mon solde').check();
-          await newPage.getByRole('button', { name: 'Valider le mode de paiement' }).click();
+          //await newPage.getByLabel('Débiter mon solde').check();
+          //await newPage.getByRole('button', { name: 'Valider le mode de paiement' }).click();
           
           console.log(`Successfully filled payment details for ${time}!`);
           bookedCount++;
